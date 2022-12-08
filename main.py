@@ -73,9 +73,9 @@ name_width = name.getbbox(title)[2]
 draw.text(xy=(bg_size[0] / 2 - name_width / 2, 10), text=title, fill='#000000', font=name)
 draw.text(xy=(bg_size[0] / 2 - renpin_width / 2, 50), text=rp, fill='#e74c3c', font=renpin) if rp[2:-2] in ['小吉', '中吉', '大吉', '吉你太美'] else draw.text(xy=(bg_size[0] / 2 - renpin_width / 2, 50), text=rp, fill='#3f3f3f', font=renpin)
 begin_pos_y=150
-draw.text(xy=(bg_size[0] / 4 - ttd_width / 2, begin_pos_y), text='宜:', fill='#e74c3c', font=yi)
+draw.text(xy=(bg_size[0] / 4 - ttd_width / 2, begin_pos_y), text='' if rp[2:-2] == '大凶' else '宜:', fill='#e74c3c', font=yi)
 draw.text(xy=(bg_size[0] / 4 - ttd_width / 2, begin_pos_y), text=' ' * 6 + things_to_do, fill='#e74c3c', font=thing)
-draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text='忌:', fill='#000000', font=yi)
+draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text='' if rp[2:-2] == '大吉' else '忌:', fill='#000000', font=yi)
 draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text=' ' * 6 + things_not_to_do, fill='#000000', font=thing)
 len_ttd=len(things_to_do.split('\n'))
 print(len_ttd)
