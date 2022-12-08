@@ -51,31 +51,31 @@ fortune_width = Fortune_Font.getbbox(fortune)[2]
 suitable_to_do,detail = random.choice([['诸事不宜','在家躺一天']] if fortune[2:-2] == '大凶' else todolist)
 suitable_to_do,detail = textwrap.fill(suitable_to_do, width=8),textwrap.fill(detail, width=12)
 
-unsuitable_to_do, det2 = random.choice([['诸事皆宜', '去做想做的事情吧']] if fortune[2:-2] == '大吉' else nottodolist)
-unsuitable_to_do, det2 = textwrap.fill(unsuitable_to_do, width=8), textwrap.fill(det2, width=12)
+unsuitable_to_do, detail2 = random.choice([['诸事皆宜', '去做想做的事情吧']] if fortune[2:-2] == '大吉' else nottodolist)
+unsuitable_to_do, detail2 = textwrap.fill(unsuitable_to_do, width=8), textwrap.fill(detail2, width=12)
 while unsuitable_to_do==suitable_to_do:
-    unsuitable_to_do,det2 = random.choice([['诸事皆宜','去做想做的事情吧']] if fortune[2:-2] == '大吉' else nottodolist)
-    unsuitable_to_do,det2 = textwrap.fill(unsuitable_to_do, width=8),textwrap.fill(det2, width=12)
+    unsuitable_to_do,detail2 = random.choice([['诸事皆宜','去做想做的事情吧']] if fortune[2:-2] == '大吉' else nottodolist)
+    unsuitable_to_do,detail2 = textwrap.fill(unsuitable_to_do, width=8),textwrap.fill(detail2, width=12)
 
-suitable_to_do2,det3 = random.choice([['','']] if fortune[2:-2] == '大凶' else todolist)
-suitable_to_do2,det3 = textwrap.fill(suitable_to_do2, width=8),textwrap.fill(det3, width=12)
+suitable_to_do2,detail3 = random.choice([['','']] if fortune[2:-2] == '大凶' else todolist)
+suitable_to_do2,detail3 = textwrap.fill(suitable_to_do2, width=8),textwrap.fill(detail3, width=12)
 while suitable_to_do2==suitable_to_do or suitable_to_do2==unsuitable_to_do:
-    suitable_to_do2, det3 = random.choice([['', '']] if fortune[2:-2] == '大凶' else todolist)
-    suitable_to_do2, det3 = textwrap.fill(suitable_to_do2, width=8), textwrap.fill(det3, width=12)
+    suitable_to_do2, detail3 = random.choice([['', '']] if fortune[2:-2] == '大凶' else todolist)
+    suitable_to_do2, detail3 = textwrap.fill(suitable_to_do2, width=8), textwrap.fill(detail3, width=12)
 
-unsuitable_to_do2,det4 = random.choice([['','']] if fortune[2:-2] == '大吉' else nottodolist)
-unsuitable_to_do2,det4 = textwrap.fill(unsuitable_to_do2, width=8),textwrap.fill(det4, width=12)
+unsuitable_to_do2,detail4 = random.choice([['','']] if fortune[2:-2] == '大吉' else nottodolist)
+unsuitable_to_do2,detail4 = textwrap.fill(unsuitable_to_do2, width=8),textwrap.fill(detail4, width=12)
 while unsuitable_to_do2==suitable_to_do or unsuitable_to_do2==unsuitable_to_do or unsuitable_to_do2==suitable_to_do2:
-    unsuitable_to_do2, det4 = random.choice([['', '']] if fortune[2:-2] == '大吉' else nottodolist)
-    unsuitable_to_do2, det4 = textwrap.fill(unsuitable_to_do2, width=8), textwrap.fill(det4, width=12)
+    unsuitable_to_do2, detail4 = random.choice([['', '']] if fortune[2:-2] == '大吉' else nottodolist)
+    unsuitable_to_do2, detail4 = textwrap.fill(unsuitable_to_do2, width=8), textwrap.fill(detail4, width=12)
 ttd_width = Suitable_To_Do_Font.getbbox(('' if fortune[2:-2] == '大凶' else ' ' * 6) + suitable_to_do)[2] if len(suitable_to_do) <= 8 else 152
 tntd_width = Suitable_To_Do_Font.getbbox(('' if fortune[2:-2] == '大吉' else ' ' * 6) + unsuitable_to_do)[2] if len(unsuitable_to_do) <= 8 else 152
 ttd_width2 = Suitable_To_Do_Font.getbbox(' ' * 6 + suitable_to_do2)[2] if len(suitable_to_do2) <= 8 else 152
 tntd_width2 = Suitable_To_Do_Font.getbbox(' ' * 6 + unsuitable_to_do2)[2] if len(unsuitable_to_do2) <= 8 else 152
-det_width = Detail_Font.getbbox(detail)[2] if len(detail) <= 12 else 144
-det2_width = Detail_Font.getbbox(det2)[2] if len(det2) <= 12 else 144
-det3_width = Detail_Font.getbbox(det3)[2] if len(det3) <= 12 else 144
-det4_width = Detail_Font.getbbox(det4)[2] if len(det4) <= 12 else 144
+detail_width = Detail_Font.getbbox(detail)[2] if len(detail) <= 12 else 144
+detail2_width = Detail_Font.getbbox(detail2)[2] if len(detail2) <= 12 else 144
+detail3_width = Detail_Font.getbbox(detail3)[2] if len(detail3) <= 12 else 144
+detail4_width = Detail_Font.getbbox(detail4)[2] if len(detail4) <= 12 else 144
 name_width = Title_Font.getbbox(title)[2]
 # 绘制
 # Draw
@@ -89,8 +89,8 @@ draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text='' if fort
 len_ttd=len(suitable_to_do.split('\n'))
 print(len_ttd)
 begin_pos_y+=25+25*(len_ttd-1)
-draw.text(xy=(bg_size[0] / 4 - det_width / 2, begin_pos_y), text=detail, fill='#7f7f7f', font=Detail_Font)
-draw.text(xy=(bg_size[0] / 4 * 3 - det2_width / 2, begin_pos_y), text=det2, fill='#7f7f7f', font=Detail_Font)
+draw.text(xy=(bg_size[0] / 4 - detail_width / 2, begin_pos_y), text=detail, fill='#7f7f7f', font=Detail_Font)
+draw.text(xy=(bg_size[0] / 4 * 3 - detail2_width / 2, begin_pos_y), text=detail2, fill='#7f7f7f', font=Detail_Font)
 
 begin_pos_y=250
 draw.text(xy=(bg_size[0] / 4 - ttd_width2 / 2, begin_pos_y), text='' if fortune[2:-2] == '大凶' else '宜:', fill='#e74c3c', font=Suitable_To_Do_Font_Bold)
@@ -100,7 +100,7 @@ draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width2 / 2, begin_pos_y), text=' ' * 6 +
 len_ttd2=len(suitable_to_do2.split('\n'))
 print(len_ttd2)
 begin_pos_y+=25+25*(len_ttd2-1)
-draw.text(xy=(bg_size[0] / 4 - det3_width / 2, begin_pos_y), text=det3, fill='#7f7f7f', font=Detail_Font)
-draw.text(xy=(bg_size[0] / 4 * 3 - det4_width / 2, begin_pos_y), text=det4, fill='#7f7f7f', font=Detail_Font)
+draw.text(xy=(bg_size[0] / 4 - detail3_width / 2, begin_pos_y), text=detail3, fill='#7f7f7f', font=Detail_Font)
+draw.text(xy=(bg_size[0] / 4 * 3 - detail4_width / 2, begin_pos_y), text=detail4, fill='#7f7f7f', font=Detail_Font)
 
 img.show()
