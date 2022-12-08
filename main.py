@@ -9,24 +9,12 @@
 import random
 import textwrap
 from PIL import Image, ImageDraw, ImageFont
-todolist=[
-    ['刷B站','承包一天笑点'],
-    ['在QQ群聊天','遇见好朋友'],
-    ['被撅','哼哼哼啊啊啊啊啊'],
-    ['写作业','蒙的全对'],
-    ['唱跳RAP篮球','只因你太美'],
-    ['打游戏','杀疯了'],
-    ['摸鱼','摸鱼不被发现']
-]
-nottodolist=[
-    ['刷B站','视频加载不出来'],
-    ['在QQ群聊天','被小鬼气死'],
-    ['被撅','休息一天~'],
-    ['写作业','全错了'],
-    ['唱跳RAP篮球','被ikun人参公鸡'],
-    ['打游戏','送人头'],
-    ['摸鱼','摸鱼被发现']
-]
+import json
+
+with open('todo.json','r',encoding='utf-8') as r:
+    j=json.load(r)
+todolist,nottodolist=j['able'],j['not']
+
 bg_size = (400, 350)
 img = Image.new('RGB', (400, 350), (255, 255, 255))
 draw = ImageDraw.Draw(img)
