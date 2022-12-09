@@ -27,7 +27,11 @@ nottodolist=[
     ['打游戏','送人头'],
     ['摸鱼','摸鱼被发现']
 ]
-Fortune_List=['大凶', '凶', '小凶', '小吉', '中吉', '大吉', '吉你太美']
+TooLucky=['大吉', '吉你太美']
+TooUnLucky=['大凶']
+Lucky=['小吉', '中吉']+TooLucky
+UnLucky=['凶', '小凶']+TooUnLucky
+Fortune_List=Lucky+UnLucky
 Bold_Font='./ttf/SourceHanSansCN-Bold.otf'
 Normal_Font='./ttf/SourceHanSansCN-Normal.otf'
 bg_size = (400, 350)
@@ -48,28 +52,28 @@ card='xy_cloud'
 title=card+'的运势'
 fortune = '§ ' + random.choice(Fortune_List) + ' §'
 fortune_width = Fortune_Font.getbbox(fortune)[2]
-suitable_to_do,detail = random.choice([['诸事不宜','在家躺一天']] if fortune[2:-2] == '大凶' else todolist)
+suitable_to_do,detail = random.choice([['诸事不宜','在家躺一天']] if fortune[2:-2] in TooUnLucky else todolist)
 suitable_to_do,detail = textwrap.fill(suitable_to_do, width=8),textwrap.fill(detail, width=12)
 
-unsuitable_to_do, detail2 = random.choice([['诸事皆宜', '去做想做的事情吧']] if fortune[2:-2] == '大吉' else nottodolist)
+unsuitable_to_do, detail2 = random.choice([['诸事皆宜', '去做想做的事情吧']] if fortune[2:-2] in TooLucky else nottodolist)
 unsuitable_to_do, detail2 = textwrap.fill(unsuitable_to_do, width=8), textwrap.fill(detail2, width=12)
 while unsuitable_to_do==suitable_to_do:
-    unsuitable_to_do,detail2 = random.choice([['诸事皆宜','去做想做的事情吧']] if fortune[2:-2] == '大吉' else nottodolist)
+    unsuitable_to_do,detail2 = random.choice([['诸事皆宜','去做想做的事情吧']] if fortune[2:-2] in TooLucky else nottodolist)
     unsuitable_to_do,detail2 = textwrap.fill(unsuitable_to_do, width=8),textwrap.fill(detail2, width=12)
 
-suitable_to_do2,detail3 = random.choice([['','']] if fortune[2:-2] == '大凶' else todolist)
+suitable_to_do2,detail3 = random.choice([['','']] if fortune[2:-2] in TooUnLucky else todolist)
 suitable_to_do2,detail3 = textwrap.fill(suitable_to_do2, width=8),textwrap.fill(detail3, width=12)
 while suitable_to_do2==suitable_to_do or suitable_to_do2==unsuitable_to_do:
-    suitable_to_do2, detail3 = random.choice([['', '']] if fortune[2:-2] == '大凶' else todolist)
+    suitable_to_do2, detail3 = random.choice([['', '']] if fortune[2:-2] in TooUnLucky else todolist)
     suitable_to_do2, detail3 = textwrap.fill(suitable_to_do2, width=8), textwrap.fill(detail3, width=12)
 
-unsuitable_to_do2,detail4 = random.choice([['','']] if fortune[2:-2] == '大吉' else nottodolist)
+unsuitable_to_do2,detail4 = random.choice([['','']] if fortune[2:-2] in TooLucky else nottodolist)
 unsuitable_to_do2,detail4 = textwrap.fill(unsuitable_to_do2, width=8),textwrap.fill(detail4, width=12)
 while unsuitable_to_do2==suitable_to_do or unsuitable_to_do2==unsuitable_to_do or unsuitable_to_do2==suitable_to_do2:
-    unsuitable_to_do2, detail4 = random.choice([['', '']] if fortune[2:-2] == '大吉' else nottodolist)
+    unsuitable_to_do2, detail4 = random.choice([['', '']] if fortune[2:-2] in TooLucky else nottodolist)
     unsuitable_to_do2, detail4 = textwrap.fill(unsuitable_to_do2, width=8), textwrap.fill(detail4, width=12)
-ttd_width = Suitable_To_Do_Font.getbbox(('' if fortune[2:-2] == '大凶' else ' ' * 6) + suitable_to_do)[2] if len(suitable_to_do) <= 8 else 152
-tntd_width = Suitable_To_Do_Font.getbbox(('' if fortune[2:-2] == '大吉' else ' ' * 6) + unsuitable_to_do)[2] if len(unsuitable_to_do) <= 8 else 152
+ttd_width = Suitable_To_Do_Font.getbbox(('' if fortune[2:-2] in TooUnLucky else ' ' * 6) + suitable_to_do)[2] if len(suitable_to_do) <= 8 else 152
+tntd_width = Suitable_To_Do_Font.getbbox(('' if fortune[2:-2] in TooLucky else ' ' * 6) + unsuitable_to_do)[2] if len(unsuitable_to_do) <= 8 else 152
 ttd_width2 = Suitable_To_Do_Font.getbbox(' ' * 6 + suitable_to_do2)[2] if len(suitable_to_do2) <= 8 else 152
 tntd_width2 = Suitable_To_Do_Font.getbbox(' ' * 6 + unsuitable_to_do2)[2] if len(unsuitable_to_do2) <= 8 else 152
 detail_width = Detail_Font.getbbox(detail)[2] if len(detail) <= 12 else 144
@@ -80,12 +84,12 @@ name_width = Title_Font.getbbox(title)[2]
 # 绘制
 # Draw
 draw.text(xy=(bg_size[0] / 2 - name_width / 2, 10), text=title, fill='#000000', font=Title_Font)
-draw.text(xy=(bg_size[0] / 2 - fortune_width / 2, 50), text=fortune, fill='#e74c3c' if fortune[2:-2] in ['小吉', '中吉', '大吉', '吉你太美'] else '#3f3f3f', font=Fortune_Font)
+draw.text(xy=(bg_size[0] / 2 - fortune_width / 2, 50), text=fortune, fill='#e74c3c' if fortune[2:-2] in Lucky else '#3f3f3f', font=Fortune_Font)
 begin_pos_y=150
-draw.text(xy=(bg_size[0] / 4 - ttd_width / 2, begin_pos_y), text='诸事不宜' if fortune[2:-2] == '大凶' else '宜:', fill='#e74c3c', font=Suitable_To_Do_Font_Bold)
-draw.text(xy=(bg_size[0] / 4 - ttd_width / 2, begin_pos_y), text='' if fortune[2:-2] == '大凶' else ' ' * 6 + suitable_to_do, fill='#e74c3c', font=Suitable_To_Do_Font)
-draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text='诸事皆宜' if fortune[2:-2] == '大吉' else '忌:', fill='#000000', font=Suitable_To_Do_Font_Bold)
-draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text='' if fortune[2:-2] == '大吉' else ' ' * 6 + unsuitable_to_do, fill='#000000', font=Suitable_To_Do_Font)
+draw.text(xy=(bg_size[0] / 4 - ttd_width / 2, begin_pos_y), text='诸事不宜' if fortune[2:-2] in TooUnLucky else '宜:', fill='#e74c3c', font=Suitable_To_Do_Font_Bold)
+draw.text(xy=(bg_size[0] / 4 - ttd_width / 2, begin_pos_y), text='' if fortune[2:-2] in TooUnLucky else ' ' * 6 + suitable_to_do, fill='#e74c3c', font=Suitable_To_Do_Font)
+draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text='诸事皆宜' if fortune[2:-2] in TooLucky else '忌:', fill='#000000', font=Suitable_To_Do_Font_Bold)
+draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width / 2, begin_pos_y), text='' if fortune[2:-2] in TooLucky else ' ' * 6 + unsuitable_to_do, fill='#000000', font=Suitable_To_Do_Font)
 len_ttd=len(suitable_to_do.split('\n'))
 print(len_ttd)
 begin_pos_y+=25+25*(len_ttd-1)
@@ -93,9 +97,9 @@ draw.text(xy=(bg_size[0] / 4 - detail_width / 2, begin_pos_y), text=detail, fill
 draw.text(xy=(bg_size[0] / 4 * 3 - detail2_width / 2, begin_pos_y), text=detail2, fill='#7f7f7f', font=Detail_Font)
 
 begin_pos_y=250
-draw.text(xy=(bg_size[0] / 4 - ttd_width2 / 2, begin_pos_y), text='' if fortune[2:-2] == '大凶' else '宜:', fill='#e74c3c', font=Suitable_To_Do_Font_Bold)
+draw.text(xy=(bg_size[0] / 4 - ttd_width2 / 2, begin_pos_y), text='' if fortune[2:-2] in TooUnLucky else '宜:', fill='#e74c3c', font=Suitable_To_Do_Font_Bold)
 draw.text(xy=(bg_size[0] / 4 - ttd_width2 / 2, begin_pos_y), text=' ' * 6 + suitable_to_do2, fill='#e74c3c', font=Suitable_To_Do_Font)
-draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width2 / 2, begin_pos_y), text='' if fortune[2:-2] == '大吉' else '忌:', fill='#000000', font=Suitable_To_Do_Font_Bold)
+draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width2 / 2, begin_pos_y), text='' if fortune[2:-2] in TooLucky else '忌:', fill='#000000', font=Suitable_To_Do_Font_Bold)
 draw.text(xy=(bg_size[0] / 4 * 3 - tntd_width2 / 2, begin_pos_y), text=' ' * 6 + unsuitable_to_do2, fill='#000000', font=Suitable_To_Do_Font)
 len_ttd2=len(suitable_to_do2.split('\n'))
 print(len_ttd2)
